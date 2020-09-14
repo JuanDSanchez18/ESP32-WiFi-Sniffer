@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/juandsanchez/eclipse-workspace/STUTM_ESP32_Promiscuous-mode/build/CMakeFiles/bootloader"
+		},
+		{
+			"file" : "/home/juandsanchez/eclipse-workspace/STUTM_ESP32_Promiscuous-mode/build/CMakeFiles/bootloader.rule"
+		},
+		{
+			"file" : "/home/juandsanchez/eclipse-workspace/STUTM_ESP32_Promiscuous-mode/build/CMakeFiles/bootloader-complete.rule"
+		},
+		{
+			"file" : "/home/juandsanchez/eclipse-workspace/STUTM_ESP32_Promiscuous-mode/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+		},
+		{
+			"file" : "/home/juandsanchez/eclipse-workspace/STUTM_ESP32_Promiscuous-mode/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+		},
+		{
+			"file" : "/home/juandsanchez/eclipse-workspace/STUTM_ESP32_Promiscuous-mode/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+		},
+		{
+			"file" : "/home/juandsanchez/eclipse-workspace/STUTM_ESP32_Promiscuous-mode/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+		},
+		{
+			"file" : "/home/juandsanchez/eclipse-workspace/STUTM_ESP32_Promiscuous-mode/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+		},
+		{
+			"file" : "/home/juandsanchez/eclipse-workspace/STUTM_ESP32_Promiscuous-mode/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+		},
+		{
+			"file" : "/home/juandsanchez/eclipse-workspace/STUTM_ESP32_Promiscuous-mode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"bootloader"
+		],
+		"name" : "bootloader"
+	}
+}
