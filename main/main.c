@@ -26,9 +26,7 @@ int countime[size];
 int status[size];
 int listcount = 0;
 
-const char *phone = "90633B9E2D27";//"94BF95B89418";
-const char *phone2 = "D09C7AB14295";
-const char *phone3 = "9094975A9B30";
+
 
 static esp_err_t event_handler(void *ctx, system_event_t *event);
 
@@ -54,8 +52,14 @@ void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
 
   char Mac[13] = "";
   char aux[2] = "";
+  char aux2[8] = "";
 
-  for(int i = 10; i <= 15; i++){ //MAC Source Address
+
+  itoa(pkt->payload[0],aux2,2);
+  printf("mgmt subtype: %02X\n",pkt->payload[0]
+ 			  );
+
+  /*for(int i = 10; i <= 15; i++){ //MAC Source Address
 
 	  itoa(pkt->payload[i],aux,16);
 	  strcat(Mac,aux);
@@ -67,7 +71,7 @@ void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
   int count = 0;
   bool added = false;
   if (strcmp(Mac,phone) == 0){
-	  //esp_wifi_80211_tx(WIFI_IF_AP, PKT2SEND, sizeof(PKT2SEND), false);
+
 	  if (listcount != 0 && listcount < size){
 		  for(int j = 0; j < listcount; j++){ // checks if the MAC address has been added before
 			  if(strcmp(Mac,maclist[j]) == 0){
@@ -105,7 +109,7 @@ void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
 			  count
 			  );
 
-   }
+   }*/
 }
 
 // Inicialización del wifi
@@ -118,7 +122,6 @@ static const wifi_country_t wifi_country = {//Set Colombia country
 
 const wifi_promiscuous_filter_t filt = {//Set promiscuous filter
 					.filter_mask =  WIFI_PROMIS_FILTER_MASK_MGMT
-
 		};
 
 esp_err_t event_handler(void *ctx, system_event_t *event)
