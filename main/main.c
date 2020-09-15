@@ -17,8 +17,7 @@
 #define HOP_INTERVAL 240//in ms (only necessary if channelHopping is true)
 
 #define size 50
-#define TTL 20
-//
+
 int ch = CHANNEL;
 
 char maclist[size][13];
@@ -26,7 +25,7 @@ int countime[size];
 int status[size];
 int listcount = 0;
 
-
+const char *probe_request = "40";
 
 static esp_err_t event_handler(void *ctx, system_event_t *event);
 
@@ -50,27 +49,28 @@ void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
   wifi_promiscuous_pkt_t* pkt = (wifi_promiscuous_pkt_t*)buf;
   wifi_pkt_rx_ctrl_t rx_ctrl = (wifi_pkt_rx_ctrl_t)pkt->rx_ctrl; //Metadata header
 
-  char Mac[13] = "";
-  char aux[2] = "";
-  char aux2[8] = "";
+  char subtype[2] = "";
 
+  itoa(pkt->payload[0],subtype,16);
 
-  itoa(pkt->payload[0],aux2,2);
-  printf("mgmt subtype: %02X\n",pkt->payload[0]
- 			  );
+  strupr(subtype);
 
-  /*for(int i = 10; i <= 15; i++){ //MAC Source Address
+  //printf("mgmt subtype: %02X, aux: %s\n",pkt->payload[0],aux2);
 
-	  itoa(pkt->payload[i],aux,16);
-	  strcat(Mac,aux);
-  }
-  strupr(Mac);
+  if (strcmp(subtype,probe_request) == 0){
 
-  //printf("LonigtudP %d, Longitud %d\n",strlen(phone),strlen(Mac));
+	  char Mac[13] = "";
+	  char aux[2] = "";
 
-  int count = 0;
-  bool added = false;
-  if (strcmp(Mac,phone) == 0){
+	  for(int i = 10; i <= 15; i++){ //MAC Source Address
+
+		itoa(pkt->payload[i],aux,16);
+		strcat(Mac,aux);
+	  }
+	  strupr(Mac);
+
+	  int count = 0;
+	  bool added = false;
 
 	  if (listcount != 0 && listcount < size){
 		  for(int j = 0; j < listcount; j++){ // checks if the MAC address has been added before
@@ -93,23 +93,20 @@ void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
 	  }
 
 	  if (listcount >= size){
-		  //memset(maclist, 0, sizeof maclist);
-		  //memset(countime, 0, sizeof countime);
 		  listcount = 0;
 	  }
 
-
-	  printf("Type= %s, Channel= %02d, RSSI= %02d, Length= %d,"
+	  printf("Type= %s, Subtype= %02X, Channel= %02d, RSSI= %02d, Length= %d,"
 			  " SMAC= %02X:%02X:%02X:%02X:%02X:%02X,"
 			  " Time= %d\n",
-			  wifi_sniffer_packet_type2str(type),
+			  wifi_sniffer_packet_type2str(type),pkt->payload[0] ,
 			  rx_ctrl.channel,rx_ctrl.rssi,rx_ctrl.sig_len,
 			  pkt->payload[10],pkt->payload[11],pkt->payload[12],
 			  pkt->payload[13],pkt->payload[14],pkt->payload[15],
 			  count
 			  );
 
-   }*/
+   }
 }
 
 // Inicialización del wifi
@@ -155,7 +152,6 @@ static void Wifi_Sniffer(void)
 	ESP_ERROR_CHECK( esp_wifi_start() );
 	ESP_ERROR_CHECK( esp_wifi_set_ps(WIFI_PS_NONE) );//Power mode
 
-
 	//Promiscuous mode
 	esp_wifi_set_promiscuous(true);
 	esp_wifi_set_promiscuous_filter(&filt);
@@ -184,7 +180,6 @@ void app_main(void)
 		}
 		wifi_second_chan_t secondCh = (wifi_second_chan_t)NULL;
 		esp_wifi_set_channel(ch,secondCh);
-
 	}
 }
 
