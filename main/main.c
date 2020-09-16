@@ -55,7 +55,7 @@ void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
 
   strupr(subtype);
 
-  //printf("mgmt subtype: %02X, aux: %s\n",pkt->payload[0],aux2);
+  //printf("mgmt subtype: %02X, aux: %s\n",pkt->payload[0],subtype);
 
   if (strcmp(subtype,probe_request) == 0){
 
