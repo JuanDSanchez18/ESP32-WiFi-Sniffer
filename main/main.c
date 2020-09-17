@@ -20,11 +20,6 @@
 
 int ch = CHANNEL;
 
-char maclist[size][13];
-int countime[size];
-int status[size];
-int listcount = 0;
-
 const char *probe_request = "40";
 
 static esp_err_t event_handler(void *ctx, system_event_t *event);
@@ -59,51 +54,13 @@ void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
 
   if (strcmp(subtype,probe_request) == 0){
 
-	  char Mac[13] = "";
-	  char aux[2] = "";
-
-	  for(int i = 10; i <= 15; i++){ //MAC Source Address
-
-		itoa(pkt->payload[i],aux,16);
-		strcat(Mac,aux);
-	  }
-	  strupr(Mac);
-
-	  int count = 0;
-	  bool added = false;
-
-	  if (listcount != 0 && listcount < size){
-		  for(int j = 0; j < listcount; j++){ // checks if the MAC address has been added before
-			  if(strcmp(Mac,maclist[j]) == 0){
-				  added = true;
-				  count = countime[j];
-				  count++;
-				  countime[j] = count;
-				  //printf("%s, %d\n", Mac,count);
-				  break;
-			  }
-		  }
-	  }
-
-	  if (!added){
-		  strcpy(maclist[listcount],Mac);
-		  countime[listcount] = 1;
-		  count = countime[listcount];
-		  listcount++;
-	  }
-
-	  if (listcount >= size){
-		  listcount = 0;
-	  }
-
 	  printf("Type= %s, Subtype= %02X, Channel= %02d, RSSI= %02d, Length= %d,"
-			  " SMAC= %02X:%02X:%02X:%02X:%02X:%02X,"
-			  " Time= %d\n",
+			  " SMAC= %02X:%02X:%02X:%02X:%02X:%02X"
+			  " \n",
 			  wifi_sniffer_packet_type2str(type),pkt->payload[0] ,
 			  rx_ctrl.channel,rx_ctrl.rssi,rx_ctrl.sig_len,
 			  pkt->payload[10],pkt->payload[11],pkt->payload[12],
-			  pkt->payload[13],pkt->payload[14],pkt->payload[15],
-			  count
+			  pkt->payload[13],pkt->payload[14],pkt->payload[15]
 			  );
 
    }
