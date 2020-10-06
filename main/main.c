@@ -27,18 +27,6 @@ static esp_err_t event_handler(void *ctx, system_event_t *event);
 static void Wifi_Sniffer(void);
 static void sniffer(void *buff, wifi_promiscuous_pkt_type_t type);
 
-
-const char *
-wifi_sniffer_packet_type2str(wifi_promiscuous_pkt_type_t type)
-{
-	switch(type) {
-		case WIFI_PKT_MGMT: return "MGMT";
-		case WIFI_PKT_DATA: return "DATA";
-		default:
-			case WIFI_PKT_MISC: return "MISC";
-	}
-}
-
 //packet sniffer
 void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
   wifi_promiscuous_pkt_t* pkt = (wifi_promiscuous_pkt_t*)buf;
@@ -54,13 +42,11 @@ void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
 
   if (strcmp(subtype,probe_request) == 0){
 
-	  printf("Type= %s, Subtype= %02X, Channel= %02d, RSSI= %02d, Length= %d,"
-			  " SMAC= %02X:%02X:%02X:%02X:%02X:%02X"
+	  printf("SMAC= %02X:%02X:%02X:%02X:%02X:%02X,"" RSSI= %02d"
 			  " \n",
-			  wifi_sniffer_packet_type2str(type),pkt->payload[0] ,
-			  rx_ctrl.channel,rx_ctrl.rssi,rx_ctrl.sig_len,
 			  pkt->payload[10],pkt->payload[11],pkt->payload[12],
-			  pkt->payload[13],pkt->payload[14],pkt->payload[15]
+			  pkt->payload[13],pkt->payload[14],pkt->payload[15],
+			  rx_ctrl.rssi
 			  );
 
    }
