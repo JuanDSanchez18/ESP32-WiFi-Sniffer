@@ -42,8 +42,8 @@ void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
 
   if (strcmp(subtype,probe_request) == 0){
 
-	  printf("SMAC= %02X:%02X:%02X:%02X:%02X:%02X,"" RSSI= %02d"
-			  " \n",
+	  printf("SMAC= %02X:%02X:%02X:%02X:%02X:%02X,"
+			  " RSSI= %02d" " \n",
 			  pkt->payload[10],pkt->payload[11],pkt->payload[12],
 			  pkt->payload[13],pkt->payload[14],pkt->payload[15],
 			  rx_ctrl.rssi
