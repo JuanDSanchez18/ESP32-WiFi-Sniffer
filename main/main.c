@@ -40,7 +40,7 @@ void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
 
   //printf("mgmt subtype: %02X, aux: %s\n",pkt->payload[0],subtype);
 
-  if (strcmp(subtype,probe_request) == 0){
+  if ((strcmp(subtype,probe_request) == 0) && (rx_ctrl.rssi > -80)){
 
 	  printf("SMAC= %02X:%02X:%02X:%02X:%02X:%02X,"
 			  " RSSI= %02d" " \n",
@@ -83,7 +83,7 @@ static void Wifi_Sniffer(void)
 				.ap = {
 					.ssid = "Esp32_Serial1",
 					.ssid_len = 0,
-					.password = "StuTm_Seial12020",
+					.password = "STUTM_Calle45",
 					.channel = 6,
 					.authmode = WIFI_AUTH_WPA2_PSK,
 					.ssid_hidden = 0,
