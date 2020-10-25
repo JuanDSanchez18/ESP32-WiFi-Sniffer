@@ -11,16 +11,17 @@
 #include "nvs_flash.h"
 #include "driver/gpio.h"
 
-#define CHANNEL 1
+#define CHANNEL 5
 #define CHANNEL_HOPPING true //if true it will scan on all channels
 #define MAX_CHANNEL 13 //(only necessary if channelHopping is true)
 #define HOP_INTERVAL 240//in ms (only necessary if channelHopping is true)
 
-#define size 50
 
 int ch = CHANNEL;
 
+// Filters Probe Request y RSSI
 const char *probe_request = "40";
+int minrssi = -80;
 
 static esp_err_t event_handler(void *ctx, system_event_t *event);
 
@@ -40,7 +41,7 @@ void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
 
   //printf("mgmt subtype: %02X, aux: %s\n",pkt->payload[0],subtype);
 
-  if ((strcmp(subtype,probe_request) == 0) && (rx_ctrl.rssi > -80)){
+  if ((strcmp(subtype,probe_request) == 0) && (rx_ctrl.rssi > minrssi)){
 
 	  printf("SMAC= %02X:%02X:%02X:%02X:%02X:%02X,"
 			  " RSSI= %02d" " \n",
