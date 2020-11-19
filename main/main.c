@@ -11,7 +11,7 @@
 #include "nvs_flash.h"
 #include "driver/gpio.h"
 
-#define CHANNEL 6
+#define CHANNEL 7
 #define CHANNEL_HOPPING true //if true it will scan on all channels
 #define MAX_CHANNEL 13 //(only necessary if channelHopping is true)
 #define HOP_INTERVAL 240//in ms (only necessary if channelHopping is true)
