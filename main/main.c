@@ -16,8 +16,6 @@
 #define MAX_CHANNEL 13 //(only necessary if channelHopping is true)
 #define HOP_INTERVAL 240//in ms (only necessary if channelHopping is true)
 
-#define size 50
-
 int ch = CHANNEL;
 
 const char *probe_request = "40";
@@ -38,9 +36,11 @@ void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
 
   strupr(subtype);
 
-  //printf("mgmt subtype: %02X, aux: %s\n",pkt->payload[0],subtype);
+  printf("mgmt subtype: %01x, aux: %s\n",pkt->payload[0],subtype);
+  //printf ("% \n",pkt->payload[0]);
 
-  if ((strcmp(subtype,probe_request) == 0) && (rx_ctrl.rssi > -80)){
+  /*if ((strcmp(subtype,probe_request) == 0) && (rx_ctrl.rssi > -80)){
+
 
 	  printf("SMAC= %02X:%02X:%02X:%02X:%02X:%02X,"
 			  " RSSI= %02d" " \n",
@@ -49,7 +49,8 @@ void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
 			  rx_ctrl.rssi
 			  );
 
-   }
+
+   }*/
 }
 
 // Inicialización del wifi
@@ -63,6 +64,7 @@ static const wifi_country_t wifi_country = {//Set Colombia country
 const wifi_promiscuous_filter_t filt = {//Set promiscuous filter
 					.filter_mask =  WIFI_PROMIS_FILTER_MASK_MGMT
 		};
+
 
 esp_err_t event_handler(void *ctx, system_event_t *event)
 {
