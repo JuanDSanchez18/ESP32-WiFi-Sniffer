@@ -19,6 +19,7 @@
 int ch = CHANNEL;
 
 const char *probe_request = "40";
+int minrssi = -80;
 
 static esp_err_t event_handler(void *ctx, system_event_t *event);
 
@@ -36,11 +37,10 @@ void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
 
   strupr(subtype);
 
-  printf("mgmt subtype: %01x, aux: %s\n",pkt->payload[0],subtype);
+  //printf("mgmt subtype: %01x, aux: %s\n",pkt->payload[0],subtype);
   //printf ("% \n",pkt->payload[0]);
 
-  /*if ((strcmp(subtype,probe_request) == 0) && (rx_ctrl.rssi > -80)){
-
+  if ((strcmp(subtype,probe_request) == 0) && (rx_ctrl.rssi > minrssi)){
 
 	  printf("SMAC= %02X:%02X:%02X:%02X:%02X:%02X,"
 			  " RSSI= %02d" " \n",
@@ -49,8 +49,7 @@ void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
 			  rx_ctrl.rssi
 			  );
 
-
-   }*/
+   }
 }
 
 // Inicialización del wifi
