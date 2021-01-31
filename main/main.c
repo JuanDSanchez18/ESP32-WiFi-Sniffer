@@ -1,3 +1,6 @@
+/*ESP32 captador de paquestes IEEE802.11, filtrado para obtener unicamente paquetes Probe Request con una cobertura 
+de 10 metros, también está configurado como punto de accesso. */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,15 +21,15 @@
 
 int ch = CHANNEL;
 
-const char *probe_request = "40";
-int minrssi = -80;
+const char *probe_request = "40"; // Subtipo paquete en frame 
+int minrssi = -80; // Filtro al RSSI, Cobertura de 10 metros
 
 static esp_err_t event_handler(void *ctx, system_event_t *event);
 
 static void Wifi_Sniffer(void);
 static void sniffer(void *buff, wifi_promiscuous_pkt_type_t type);
 
-//packet sniffer
+// Recibe todas las capturas y aplica los filtros
 void sniffer(void *buf, wifi_promiscuous_pkt_type_t type){
   wifi_promiscuous_pkt_t* pkt = (wifi_promiscuous_pkt_t*)buf;
   wifi_pkt_rx_ctrl_t rx_ctrl = (wifi_pkt_rx_ctrl_t)pkt->rx_ctrl; //Metadata header
@@ -70,6 +73,7 @@ esp_err_t event_handler(void *ctx, system_event_t *event)
     return ESP_OK;
 }
 
+// Configuración ESP32 
 static void Wifi_Sniffer(void)
 {
 	nvs_flash_init();
