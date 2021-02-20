@@ -14,7 +14,7 @@
 #define CHANNEL 1
 #define CHANNEL_HOPPING true //if true it will scan on all channels
 #define MAX_CHANNEL 13 //(only necessary if channelHopping is true)
-#define HOP_INTERVAL 200//in ms (only necessary if channelHopping is true)
+#define HOP_INTERVAL 250//in ms (only necessary if channelHopping is true)
 
 int ch = CHANNEL;
 
@@ -82,9 +82,9 @@ static void Wifi_Sniffer(void)
 	ESP_ERROR_CHECK( esp_wifi_set_mode(WIFI_MODE_AP) );
 	wifi_config_t ap_config = {
 				.ap = {
-					.ssid = "Esp32_Calle45",
+					.ssid = "Esp32_EStacion1",
 					.ssid_len = 0,
-					.password = "STUTM_Calle45",
+					.password = "STUTM_Estacion1",
 					.channel = 6,
 					.authmode = WIFI_AUTH_WPA2_PSK,
 					.ssid_hidden = 0,
